@@ -21,4 +21,16 @@ def existe (usuario) :
             f'{usuario.senha}'))
             result = cursor.fetchone()
             return result != None
+def cadastrar_usuario(usuario):
+    with psycopg.connect(
+        host="localhost",
+        port=5050,
+        dbname="Apostila_07",
+        user="postgres",
+        password="123456"
+    ) as conexao:
+        with conexao.cursor() as cursor:
+            cursor.execute("INSERT INTO tb_usuario (login, senha, cadastrar_usuario) VALUES (%s, %s, %s)",
+                           (usuario.login, usuario.senha, 'S')) 
+            conexao.commit()
 
