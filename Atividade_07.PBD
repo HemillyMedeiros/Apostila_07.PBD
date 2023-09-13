@@ -7,3 +7,18 @@ class Usuario:
     def __init__(self, login, senha) :
         self.login = login
         self.senha = senha
+
+def existe (usuario) :
+    with psycopg.connect(
+        host="localhost",
+        port=5050,
+        dbname="Apostila_07",
+        user="postgres",
+        password="123456"
+    ) as conexao:
+        with conexao.cursor() as cursor:
+            cursor.execute('Select * FROM tb_usuario WHERE login=%s AND senha=%s', (f'{usuario.login}',
+            f'{usuario.senha}'))
+            result = cursor.fetchone()
+            return result != None
+
